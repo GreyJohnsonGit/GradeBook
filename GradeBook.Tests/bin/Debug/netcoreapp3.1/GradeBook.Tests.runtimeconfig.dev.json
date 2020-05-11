@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\gcape\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\gcape\\.nuget\\packages"
+    ]
+  }
+}
