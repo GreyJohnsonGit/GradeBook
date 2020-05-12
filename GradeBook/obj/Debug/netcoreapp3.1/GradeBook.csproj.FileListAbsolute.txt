@@ -1,4 +1,3 @@
-C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.csprojAssemblyReference.cache
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.csproj.CoreCompileInputs.cache
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.AssemblyInfoInputs.cache
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.AssemblyInfo.cs

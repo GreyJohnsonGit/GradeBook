@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace GradeBook
 {
@@ -7,58 +8,50 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            var grades = new List<double>() { 12.00, 11.00, 12.00, 44.12, 100.00 };
-            
-            Book book = new Book("Nemo's Gradebook");
-            foreach (var grade in grades)
+            Book book;
+            double numGrade;
+            char letGrade;
+            string input;
+
+            Console.WriteLine("Please Enter GradeBook Name:");
+            book = new Book(Console.ReadLine());
+
+            bool done = false;
+            while(!done)
             {
-                book.AddGrade(grade);
+                Console.WriteLine("Please Enter New Grade (Q to Display Statistics):");
+                input = Console.ReadLine();
+                if (input == "Q")
+                {
+                    done = true;
+                }
+                else if (double.TryParse(input, out numGrade))
+                {
+                    try
+                    {
+                        book.AddGrade(numGrade);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    catch(FormatException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else if (char.TryParse(input, out letGrade) && ((letGrade >= 'A' && letGrade <= 'D') || (letGrade == 'F')))
+                {
+                    book.AddLetterGrade(letGrade);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input");
+                }
             }
 
             Statistics stats = book.GetStatistics();
-        }
-    }
-
-    public class Book
-    {
-        private string name;
-        private List<double> grades;
-
-        public Book()
-        {
-            grades = new List<double>() {};
-        }
-
-        public Book(string _name) : this()
-        {
-            this.name = _name;
-        }
-        public void AddGrade(double grade)
-        {
-            grades.Add(grade);
-        }
-
-        public Statistics GetStatistics() {
-            var stats = new Statistics();
-
-            if (grades.Count == 0)
-            {
-                stats.Initialize(0, 0, 0);
-            }
-            else {
-                stats.Initialize(double.MaxValue, double.MinValue, 0);
-
-                double sum = 0;
-                foreach (var grade in grades)
-                {
-                    sum += grade;
-                    stats.UpdateMinMax(grade);
-                }
-
-                stats.SetAvg(sum / grades.Count);
-            }
-
-            return stats;
+            Console.WriteLine($"{book.GetName()}:\nLETTER: {stats.Letter} | AVG: {stats.Average:N2} | MIN: {stats.Minimum:N2} | MAX {stats.Maximum:N2}");
         }
     }
 }
