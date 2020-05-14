@@ -1,69 +1,35 @@
 using System;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace GradeBook.Tests
 {
+
+    public delegate string WriteLogDelegate(string logMessage);
+
     public class TypeTests
     {
         [Fact]
         public void SharedReferenceToBookIsPossible()
         {
-            var book1 = new Book("Book 1");
+            var book1 = new InMemoryBook("Book 1");
             var book2 = book1;
 
             Assert.Same(book1, book2);
-            Assert.Equal("Book 1", book1.GetName());
-            Assert.Equal("Book 1", book2.GetName());
+            Assert.Equal("Book 1", book1.Name);
+            Assert.Equal("Book 1", book2.Name);
         }
 
         [Fact]
         public void BookNameIsNotShared()
         {
-            var book1 = new Book("Book 1");
-            var book2 = new Book("Book 2");
+            var book1 = new InMemoryBook("Book 1");
+            var book2 = new InMemoryBook("Book 2");
 
-            Assert.Equal("Book 1", book1.GetName());
-            Assert.Equal("Book 2", book2.GetName());
+            Assert.Equal("Book 1", book1.Name);
+            Assert.Equal("Book 2", book2.Name);
         }
 
-        [Fact]
-        public void SetNameWorks()
-        {
-            var book1 = new Book("Book 1");
-            book1.SetName("New Name");
-
-            Assert.Equal("New Name", book1.GetName());
-        }
-
-        [Fact]
-        public void CSharpIsPassByValue()
-        {
-            var book1 = new Book("Book 1");
-            GetBookSetName(book1, "New Name");
-
-            Assert.Equal("Book 1", book1.GetName());
-        }
-
-        private void GetBookSetName(Book book, string name)
-        {
-            book = new Book();
-            book.SetName(name);
-        }
-
-        [Fact]
-        public void CSharpCanPassByReference()
-        {
-            var book1 = new Book("Book 1");
-            GetBookSetName(ref book1, "New Name");
-
-            Assert.Equal("New Name", book1.GetName());
-        }
-
-        private void GetBookSetName(ref Book book, string name)
-        {
-            book = new Book();
-            book.SetName(name);
-        }
 
         [Fact]
         public void StringBehaveLikeValueTypes()
@@ -79,6 +45,32 @@ namespace GradeBook.Tests
         private string MakeUpper(string str)
         {
             return str.ToUpper();
+        }
+
+        int count = 0;
+
+        [Fact]
+        public void WriteLogDelegateCanPointToMethod()
+        {
+            WriteLogDelegate log = ReturnMessage;
+            log += ReturnMessage;
+            log += ReturnMessage2;
+
+            log("Hello");
+
+            Assert.Equal(3, count);
+        }
+
+        string ReturnMessage(string msg)
+        {
+            count++;
+            return msg;
+        }
+
+        string ReturnMessage2(string msg)
+        {
+            count++;
+            return msg;
         }
     }
 }

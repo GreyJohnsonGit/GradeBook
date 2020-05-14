@@ -1,54 +1,72 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace GradeBook
 {
-    public struct Statistics
+    public class Statistics
     {
         public double Minimum;
         public double Maximum;
-        public double Average;
-        public char Letter;
-
-        public void Initialize(double _min, double _max, double _avg)
+        public double Average
         {
-            Minimum = _min;
-            Maximum = _max;
-            Average = _avg;
-            UpdateLetter();
-        }
-
-        public void UpdateMinMax(double _comp) {
-            Minimum = Math.Min(_comp, Minimum);
-            Maximum = Math.Max(_comp, Maximum);
-        }
-
-        public void SetAvg(double _avg)
-        {
-            Average = _avg;
-            UpdateLetter();
-        }
-
-        private void UpdateLetter()
-        {
-            switch(Average)
-            {
-                case double avg when avg >= 90:
-                    Letter = 'A';
-                    break;
-                case double avg when avg >= 80:
-                    Letter = 'B';
-                    break;
-                case double avg when avg >= 70:
-                    Letter = 'C';
-                    break;
-                case double avg when avg >= 60:
-                    Letter = 'D';
-                    break;
-                default:
-                    Letter = 'F';
-                    break;
+            get 
+            { 
+                return count != 0 ? sum / count : 0; 
             }
+        }
+        public char Letter
+        {
+            get
+            {
+                switch (Average)
+                {
+                    case double avg when avg >= 90: return 'A';
+                    case double avg when avg >= 80: return 'B';
+                    case double avg when avg >= 70: return 'C';
+                    case double avg when avg >= 60: return 'D';
+                    default: return 'F';
+                }
+            }
+        }
+
+        private double sum;
+        private double count;
+
+        public Statistics()
+        {
+            Minimum = Double.MaxValue;
+            Maximum = Double.MinValue;
+            sum = 0;
+            count = 0;
+        }
+
+        public Statistics(List<double> _grades) : this()
+        { 
+            if (_grades != null && _grades.Count != 0)
+            {
+                foreach (double grade in _grades)
+                {
+                    Add(grade);
+                }
+            }
+        }
+
+        public void Add(double _grade)
+        {
+            if (_grade >= 0 && _grade <= 100)
+            {
+                sum += _grade;
+                count++;
+                Minimum = Math.Min(_grade, Minimum);
+                Maximum = Math.Max(_grade, Maximum);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid {nameof(_grade)}");
+            }
+            
         }
     }
 }

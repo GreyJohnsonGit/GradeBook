@@ -8,10 +8,10 @@ namespace GradeBook.Tests
         [Fact]
         public void BookCalculatesStatistics()
         {
-            Book book;
+            InMemoryBook book;
             Statistics stats;
 
-            book = new Book();
+            book = new InMemoryBook("Test Book");
             book.AddGrade(100);
             book.AddGrade(50);
             book.AddGrade(75);
@@ -26,10 +26,10 @@ namespace GradeBook.Tests
         [Fact]
         public void CheckGradeBounds()
         {
-            Book book;
+            InMemoryBook book;
             Statistics stats;
 
-            book = new Book();
+            book = new InMemoryBook("Test Book");
 
             book.AddGrade(32);
             book.AddGrade(0);

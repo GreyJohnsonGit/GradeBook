@@ -10,3 +10,4 @@ C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\bin\Debug\netcoreapp
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.dll
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.pdb
 C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.genruntimeconfig.cache
+C:\Users\gcape\Desktop\CSharpPlayground\GradeBook\GradeBook\obj\Debug\netcoreapp3.1\GradeBook.csprojAssemblyReference.cache

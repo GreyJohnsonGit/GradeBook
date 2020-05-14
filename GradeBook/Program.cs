@@ -8,16 +8,25 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            Book book;
+            IBook book;
+            
+            Console.WriteLine("Please Enter GradeBook Name:");
+            book = new DiskBook(Console.ReadLine());
+
+            EnterGrades(book);
+
+            Statistics stats = book.GetStatistics();
+            Console.WriteLine($"{book.Name}:\nLETTER: {stats.Letter} | AVG: {stats.Average:N2} | MIN: {stats.Minimum:N2} | MAX {stats.Maximum:N2}");
+        }
+
+        private static bool EnterGrades(IBook book)
+        {
             double numGrade;
             char letGrade;
             string input;
 
-            Console.WriteLine("Please Enter GradeBook Name:");
-            book = new Book(Console.ReadLine());
-
             bool done = false;
-            while(!done)
+            while (!done)
             {
                 Console.WriteLine("Please Enter New Grade (Q to Display Statistics):");
                 input = Console.ReadLine();
@@ -35,14 +44,14 @@ namespace GradeBook
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    catch(FormatException ex)
+                    catch (FormatException ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
                 }
                 else if (char.TryParse(input, out letGrade) && ((letGrade >= 'A' && letGrade <= 'D') || (letGrade == 'F')))
                 {
-                    book.AddLetterGrade(letGrade);
+                    book.AddGrade(letGrade);
                 }
                 else
                 {
@@ -50,8 +59,7 @@ namespace GradeBook
                 }
             }
 
-            Statistics stats = book.GetStatistics();
-            Console.WriteLine($"{book.GetName()}:\nLETTER: {stats.Letter} | AVG: {stats.Average:N2} | MIN: {stats.Minimum:N2} | MAX {stats.Maximum:N2}");
+            return done;
         }
     }
 }
